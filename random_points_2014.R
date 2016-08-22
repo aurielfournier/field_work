@@ -2,11 +2,8 @@ library(rgeos)
 library(maptools)
 library(rgdal)
 
-setwd("C:/Users/avanderlaar/Dropbox/GIS/2014/")
 
-
-
-nv <- readOGR(dsn="C:/Users/avanderlaar/Dropbox/GIS/2014", layer="nv_impound")
+nv <- readOGR(dsn="C:/Users/avand/Dropbox/GIS/2014", layer="nv_impound")
 nv <- spTransform(nv, CRS("+proj=longlat +datum=WGS84"))
 sc <- readOGR(dsn="C:/Users/avanderlaar/Dropbox/GIS/2014", layer="sc_impound")
 sc <- spTransform(sc, CRS("+proj=longlat +datum=WGS84"))
@@ -319,5 +316,13 @@ a68 <- rbind(a67, cc16.p)
 afinal <- rbind(a68, nvsanc.p)
 
 points <- SpatialPointsDataFrame(afinal, coords=afinal[,1:2], proj4string=CRS("+proj=longlat +datum=WGS84"))
+
+
+
 writeOGR(points, driver="ESRI Shapefile", layer="random_2014",dsn="C:/Users/avanderlaar/Dropbox/GIS/2014", overwrite_layer=T)
 writeOGR(points, driver="KML",dsn="random_2014.kml", overwrite_layer=T, layer="points")
+
+
+nvash.p <- SpatialPointsDataFrame(nvash.p, coords=nvash.p[,1:2], proj4string = CRS("+proj=longlat +datum=WGS84"))
+
+writeOGR(nvash.p, driver="ESRI Shapefile",layer="nvashp.shp", overwrite_layer=T, dsn="~/fieldwork")
